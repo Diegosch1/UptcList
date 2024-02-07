@@ -10,6 +10,8 @@ public class MessageController {
 
     @GetMapping()
     public String getMessager() {
-        return "Hello Waaaaaaarld";
+        char comillas = 34;
+        String output = "<img src="+comillas+"https://avatars.githubusercontent.com/u/120030275?v=4"+comillas+">";
+        return output;
     }
 }
