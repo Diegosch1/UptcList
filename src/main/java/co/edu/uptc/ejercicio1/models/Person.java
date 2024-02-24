@@ -5,6 +5,15 @@ public class Person {
     private String lastName;
     private int weight;
     
+    public Person(String name, String lastName, int weight) {
+        this.name = name;
+        this.lastName = lastName;
+        this.weight = weight;
+    }
+    
+    public Person() {
+    }
+
     public String getName() {
         return name;
     }
