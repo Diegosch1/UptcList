@@ -78,7 +78,7 @@ public class UptcList<T> implements List<T>{
 
     @Override
     public Iterator<T> iterator() {
-        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+        return new UptcListIterator<T>();
     }
 
     @Override
@@ -319,7 +319,7 @@ public class UptcList<T> implements List<T>{
             throw new NullPointerException("No such object on list");
         }
     }
-    public class UptcListIterator<A> implements Iterator<T> {
+    private class UptcListIterator<A> implements Iterator<T> {
         Node<T> currentNode = header;
 
         @Override
