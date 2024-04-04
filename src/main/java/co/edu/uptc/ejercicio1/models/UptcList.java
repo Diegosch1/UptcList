@@ -147,6 +147,7 @@ public class UptcList<T> implements List<T>{
 
     @Override
     public void clear() {
+        size = 0;
         header = null;
     }
 
