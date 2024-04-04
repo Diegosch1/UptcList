@@ -1,4 +1,4 @@
-package co.edu.uptc.ejercicio1.models;
+package co.edu.uptc.UptcList.models;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-public class UptcList<T> implements List<T>{
+public class UptcList<T> implements List<T> {
 
     private Node<T> header = null;
     private int size = 0;
@@ -78,17 +78,29 @@ public class UptcList<T> implements List<T>{
 
     @Override
     public Iterator<T> iterator() {
-        return new UptcListIterator<T>();
+        return new ListIteratorUptc();
     }
 
     @Override
     public Object[] toArray() {
-        throw new UnsupportedOperationException("Unimplemented method 'toArray'");
+        try {
+            Object[] aux = new Object[this.size];
+
+            for (int i = 0; i < this.size; i++) {
+                aux[i] = this.get(i);
+            }
+            return aux;
+        } catch (ArrayStoreException e) {
+            throw new ArrayStoreException(
+                    "The runtime type of the array is not a supertype on every element on the list");
+        } catch (NullPointerException e) {
+            throw new NullPointerException("The defined array is null");
+        }
     }
 
     @Override
     public <T> T[] toArray(T[] a) {
-        throw new UnsupportedOperationException("Unimplemented method 'toArray'");
+        throw new UnsupportedOperationException("Unimplemented method 'retainAll'");
     }
 
     @Override
@@ -172,17 +184,16 @@ public class UptcList<T> implements List<T>{
     public T set(int index, T element) {
         try {
             Node<T> targetNode = this.findNode(index);
-            if (targetNode==null) {
+            if (targetNode == null) {
                 throw new IndexOutOfBoundsException("There is not such an object with that index");
             }
             targetNode.setInfo(element);
             return targetNode.getInfo();
-        } catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             throw new IndexOutOfBoundsException("Invalid index");
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             throw new NullPointerException("Null object");
-        } 
+        }
     }
 
     @Override
@@ -239,7 +250,6 @@ public class UptcList<T> implements List<T>{
         T removedElement = targetNode.getInfo();
         return removedElement;
     }
-
     @Override
     public int indexOf(Object o) {
         try {
@@ -282,12 +292,12 @@ public class UptcList<T> implements List<T>{
 
     @Override
     public ListIterator<T> listIterator() {
-        throw new UnsupportedOperationException("Unimplemented method 'listIterator'");
+        return new ListIteratorUptc();
     }
 
     @Override
     public ListIterator<T> listIterator(int index) {
-        throw new UnsupportedOperationException("Unimplemented method 'listIterator'");
+        return new ListIteratorUptc();
     }
 
     @Override
@@ -296,14 +306,18 @@ public class UptcList<T> implements List<T>{
     }
 
     public Node<T> findNode(int index) {
-        if (index < 0 || index > this.size()) {
-            throw new IndexOutOfBoundsException("Index out of range");
+        try {
+            if (index < 0 || index > this.size()) {
+                throw new IndexOutOfBoundsException("Index out of range");
+            }
+            Node<T> aux = header;
+            for (int i = 0; i < index; i++) {
+                aux = aux.getNext();
+            }
+            return aux;
+        } catch (NullPointerException e) {
+            throw new NullPointerException("Null mf");
         }
-        Node<T> aux = header;
-        for (int i = 0; i < index; i++) {
-            aux = aux.getNext();
-        }
-        return aux;
     }
 
     public Node<T> findNode(Object o) {
@@ -320,23 +334,76 @@ public class UptcList<T> implements List<T>{
             throw new NullPointerException("No such object on list");
         }
     }
-    private class UptcListIterator<A> implements Iterator<T> {
-        Node<T> currentNode = header;
+
+    private class ListIteratorUptc implements ListIterator<T> {
+        
+        private Node<T> aux = header;
+        private int index = -1;
 
         @Override
         public boolean hasNext() {
-            return currentNode!=null;
+            return aux!=null;
         }
 
         @Override
         public T next() {
-            if(!hasNext()){
-                throw new NoSuchElementException("There is no next element");
+            try{
+                if (!hasNext()) {                    
+                    throw new NoSuchElementException("No hay un elemento siguiente del mismo");
+                }
+                T info = aux.getInfo();
+                aux = aux.getNext();    
+                index++;                     
+                return info;
+            } catch (Exception e){
+                throw new NullPointerException("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             }
-            T info = currentNode.getInfo();
-            currentNode=currentNode.getNext();
-            return info;
         }
+
+        @Override
+        public boolean hasPrevious() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'hasPrevious'");
+        }
+
+        @Override
+        public T previous() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'previous'");
+        }
+
+        @Override
+        public int nextIndex() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'nextIndex'");
+        }
+
+        @Override
+        public int previousIndex() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'previousIndex'");
+        }
+
+        @Override
+        public void remove() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'remove'");
+        }
+
+        @Override
+        public void set(T e) {
+            Node<T> aux = findNode(index);
+            if (aux != null) {
+                aux.setInfo(e);
+            }
+        }
+
+        @Override
+        public void add(T e) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'add'");
+        }
+
     }
 
 }

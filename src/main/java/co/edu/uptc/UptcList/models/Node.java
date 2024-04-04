@@ -1,4 +1,4 @@
-package co.edu.uptc.ejercicio1.models;
+package co.edu.uptc.UptcList.models;
 
 
 public class Node<T> {
