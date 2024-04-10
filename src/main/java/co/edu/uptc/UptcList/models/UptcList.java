@@ -87,7 +87,6 @@ public class UptcList<T> implements List<T> {
                 if (tString.contains(tCoincidenceString)) {                    
                     result.add(t);
                 }
-
             }
         }
         return result;
