@@ -76,6 +76,23 @@ public class UptcList<T> implements List<T> {
         return false;
     }
 
+    
+    public UptcList<T> getCoincidences(T coincidence){
+        UptcList<T> result = new UptcList<>();        
+        for (T t : this) {
+            if (t instanceof String) {
+
+                String tString = ((String) t).trim();
+                String tCoincidenceString = ((String) coincidence).trim();
+                if (tString.contains(tCoincidenceString)) {                    
+                    result.add(t);
+                }
+
+            }
+        }
+        return result;
+    }
+
     @Override
     public Iterator<T> iterator() {
         return new ListIteratorUptc();
@@ -250,6 +267,7 @@ public class UptcList<T> implements List<T> {
         T removedElement = targetNode.getInfo();
         return removedElement;
     }
+
     @Override
     public int indexOf(Object o) {
         try {
@@ -336,26 +354,26 @@ public class UptcList<T> implements List<T> {
     }
 
     private class ListIteratorUptc implements ListIterator<T> {
-        
+
         private Node<T> aux = header;
         private int index = -1;
 
         @Override
         public boolean hasNext() {
-            return aux!=null;
+            return aux != null;
         }
 
         @Override
         public T next() {
-            try{
-                if (!hasNext()) {                    
+            try {
+                if (!hasNext()) {
                     throw new NoSuchElementException("No hay un elemento siguiente del mismo");
                 }
                 T info = aux.getInfo();
-                aux = aux.getNext();    
-                index++;                     
+                aux = aux.getNext();
+                index++;
                 return info;
-            } catch (Exception e){
+            } catch (Exception e) {
                 throw new NullPointerException("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             }
         }

@@ -10,8 +10,8 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>co.edu.uptc</groupId>
-	<artifactId>diegoschi</artifactId>
-	<version>1.1</version>
+	<artifactId>UptcList</artifactId>
+	<version>1.2</version>
 	<name>UptcList</name>
 	<properties>
 		<java.version>21</java.version>
